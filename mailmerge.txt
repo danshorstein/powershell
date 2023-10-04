@@ -1,0 +1,22 @@
+# File and Email parameters 
+$filePath = ".\test.txt"
+$toEmail = "dshorstein@deloitte.com"
+$subject = "Test Email"
+$body = "This is a test email with an attachment."
+ 
+# Create a .txt file with the word "test"
+Set-Content -Path $filePath -Value "test"
+ 
+# Create a new Outlook Application object and email item
+$outlook = New-Object -ComObject Outlook.Application
+$mail = $outlook.CreateItem(0)
+ 
+$mail.To = $toEmail
+$mail.Subject = $subject
+$mail.Body = $body
+$mail.Attachments.Add((Resolve-Path $filePath).Path)
+ 
+# Send the email
+$mail.Send()
+ 
+Write-Host "Test email sent successfully!"
